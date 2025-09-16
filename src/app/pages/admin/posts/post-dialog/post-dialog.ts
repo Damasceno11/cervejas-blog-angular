@@ -67,6 +67,8 @@ export class PostDialog implements OnInit {
           });
         }
       } else {
+        // Data e views novo post
+        const newPost = { ...postData, date: new Date().toISOString(), views: 0 };
         this.apiService.createPost(postData).subscribe({
           next: () => this.dialogRef.close(true), // Fecha o dialog com sucesso
           error: (error) => console.error('Erro ao criar post:', error),

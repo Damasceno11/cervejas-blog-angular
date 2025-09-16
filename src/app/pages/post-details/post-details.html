@@ -1,0 +1,65 @@
+<div class="post-details-container">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando postagem...</p>
+  </div>
+
+  <!-- Erro -->
+  <div *ngIf="!loading && error" class="error">
+    <mat-icon>error_outline</mat-icon>
+    <h3>Oops! Algo deu errado</h3>
+    <p>{{ error }}</p>
+    <div class="error-actions">
+      <button mat-raised-button color="primary" (click)="tryAgain()">
+        <mat-icon>refresh</mat-icon>
+        Tentar novamente
+      </button>
+      <button mat-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar
+      </button>
+    </div>
+  </div>
+
+  <!-- Post encontrado -->
+  <div *ngIf="!loading && !error && post" class="post-content">
+    <mat-card class="post-card">
+      <img
+        [src]="post.imageUrl || 'assets/default-post.jpg'"
+        alt="Imagem da Postagem"
+        class="post-image"
+        (error)="handleImageError($event)"
+      />
+      <mat-card-header>
+        <mat-card-title>{{ post.title }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ post.category }} | Por {{ post.author }}
+          <span *ngIf="post.views">• {{ post.views }} visualizações</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="post-content-text">{{ post.content }}</p>
+        <p class="post-date" *ngIf="post.date">
+          Publicado em: {{ post.date | date : 'dd/MM/yyyy' }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          VOLTAR
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Post não encontrado -->
+  <div *ngIf="!loading && !error && !post" class="not-found">
+    <mat-icon>article</mat-icon>
+    <h3>Postagem não encontrada</h3>
+    <p>A postagem que você está procurando não existe ou foi removida.</p>
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Voltar para a página inicial
+    </button>
+  </div>
+</div>

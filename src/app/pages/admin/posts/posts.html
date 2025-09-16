@@ -1,0 +1,43 @@
+<div class="admin-posts">
+  <h3>Gerenciamento de Postagens</h3>
+  <button mat-raised-button color="primary" (click)="openPostDialog()">
+    <mat-icon>add</mat-icon> Adicionar Novo Post
+  </button>
+
+  <table mat-table [dataSource]="posts" class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Título</th>
+      <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef>Autor</th>
+      <td mat-cell *matCellDef="let element">{{ element.author }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Categoria</th>
+      <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="views">
+      <th mat-header-cell *matHeaderCellDef>Visualizações</th>
+      <td mat-cell *matCellDef="let element">{{ element.views }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="openPostDialog(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deletePost(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

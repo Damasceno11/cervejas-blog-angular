@@ -1,0 +1,32 @@
+<div class="posts-container">
+  <div *ngIf="posts.length === 0" class="no-posts">
+    <mat-icon>article</mat-icon>
+    <h3>Nenhuma postagem encontrada</h3>
+    <p>Tente ajustar os filtros de pesquisa ou categoria</p>
+  </div>
+
+  <mat-card *ngFor="let post of posts" class="post-card">
+    <div style="display: none">ID: {{ post.id }} - Tipo: {{typeof post.id}}</div>
+
+    <img
+      [src]="post.imageUrl || 'assets/default-post.jpg'"
+      alt="Imagem da Postagem"
+      class="post-image"
+    />
+    <mat-card-header>
+      <mat-card-title>{{ post.title }}</mat-card-title>
+      <mat-card-subtitle> {{ post.category }} • Por {{ post.author }} </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ (post.content || '').slice(0, 150) }}...</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- CORREÇÃO: Adicionamos a classe 'modern-btn' -->
+      <a mat-button class="modern-btn" [routerLink]="['/post', post.id]"
+        ><mat-icon>arrow_forward</mat-icon>LER MAIS</a
+      >
+      <span *ngIf="post.views">{{ post.views }} visualizações</span>
+      <span *ngIf="post.date">{{ post.date | date : 'dd/MM/yyyy' }}</span>
+    </mat-card-actions>
+  </mat-card>
+</div>

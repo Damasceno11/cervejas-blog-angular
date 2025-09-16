@@ -1,0 +1,117 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "A IPA Perfeita para o Verão",
+      "author": "Maria Silva",
+      "category": "IPAs",
+      "content": "Descubra as características que tornam uma IPA ideal para dias quentes...",
+      "date": "2025-08-20T10:00:00Z",
+      "views": 160,
+      "imageUrl": "https://geremiabar.com.br/wp-content/uploads/2022/03/o-guia-blog-1024x536.png"
+    },
+    {
+      "id": "2",
+      "title": "Cervejas Artesanais: O Guia do Iniciante",
+      "author": "João Pereira",
+      "category": "Guia",
+      "content": "Um guia completo para quem está começando a explorar o mundo das cervejas artesanais...",
+      "date": "2025-08-18T15:30:00Z",
+      "views": 268,
+      "imageUrl": "https://cervejaeresenha.com.br/wp-content/uploads/2024/09/Melhores-Cervejas-Artesanais-para-Iniciantes.jpg"
+    },
+    {
+      "id": "3",
+      "title": "A história por trás da Stout",
+      "author": "Ana Costa",
+      "category": "História",
+      "content": "Conheça a rica história e as variações deste estilo clássico e todos os subestilos, ingredientes...",
+      "date": "2025-08-15T09:45:00Z",
+      "views": 123,
+      "imageUrl": "https://cervejariamarbus.com.br/cdn/shop/articles/cerveja-stout-historia-sabores-e-variedades-para-apreciadores-403442.jpg?v=1747835653&width=900",
+      "imageIUrl": "https://cervejariamarbus.com.br/cdn/shop/articles/cerveja-stout-historia-sabores-e-variedades-para-apreciadores-403442.jpg?v=1747835653&width=900"
+    },
+    {
+      "id": "f394",
+      "title": "Hazy IPAs",
+      "author": "Pedro Damasceno",
+      "category": "IPAs",
+      "content": "As Hazy IPAs são cervejas turvas remetendo a um suco de laranja, e com aroma intenso e complexo de frutas amarelas com caroço, como manga , pêssego e ...",
+      "imageUrl": "https://www.stonebrewing.com/sites/default/files/styles/large/public/hazybeersq.jpg?itok=gnEeSGHk",
+      "date": "2025-09-10T22:45:17.013Z",
+      "views": 6
+    },
+    {
+      "id": "af7a",
+      "title": "Guia HomeBrewing - Como Fazer Sua Própria Cerveja",
+      "author": "Pedro Damasceno",
+      "category": "Guia",
+      "content": "Para fazer sua própria cerveja, você deve definir a receita e os ingredientes (malte, lúpulo, levedura e água), preparar o malte moído e misturá-lo com água aquecida para a extração de açúcares na mostura. Em seguida, você ferve o mosto, adicionando o lúpulo para aroma e amargor, e depois resfria-o para adicionar a levedura, que transformará os açúcares em álcool durante a fermentação. Por fim, o líquido é maturado, carbonatado e engarrafado para con...",
+      "imageUrl": "https://catalisajr.com.br/site/wp-content/uploads/2020/08/mercado-cervejeiro-1024x683.jpg",
+      "date": "2025-09-11T19:33:26.201Z",
+      "views": 5
+    },
+    {
+      "id": "0886",
+      "title": "De volta ao básico",
+      "author": "Pedro Damasceno",
+      "category": "Lagers",
+      "content": "A lager voltou com tudo, depois de degustarmos uma miríade de estilos diferentes e uma gama de IPAS, o paladar sempre volta para a nossa queridsa lager...",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS-QUpyWpQBBpCRV8S6Ajn4ctIgDnKsgNAtg&s",
+      "views": 10
+    },
+    {
+      "id": "3ba2",
+      "title": "História da Doppelbock ",
+      "author": "Carolina March",
+      "category": "História",
+      "content": "A história da Doppelbock remonta à Baviera, Alemanha, no século XVII, onde monges da Ordem de São Francisco de Paula criaram esta cerveja mais potente que a Bock para suportar os rigorosos jejuns da Quaresma, recebendo o nome original de \"sankt-vater-bier\" ou \"cerveja do Santo Pai\". Com o tempo, a Doppelbock ganhou a reputação de \"pão líquido\", devido ao seu alto teor de nutrientes e malte, tornando-se uma cerveja forte, rica e maltada, com um teor alcoólico elevado e sabores que variam de caramelo a frutas seca...",
+      "imageUrl": "https://ksbacademy.com/wp-content/uploads/2024/08/web3-beer-monks-cheers-drinking-alcohol-trappists-public-domain.jpg.webp",
+      "views": 3
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "IPAs"
+    },
+    {
+      "id": "2",
+      "name": "Guia"
+    },
+    {
+      "id": "3",
+      "name": "História"
+    },
+    {
+      "id": "6b72",
+      "name": "Lagers"
+    },
+    {
+      "id": "e7b7",
+      "name": "Ales"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "123"
+    },
+    {
+      "id": "fc40",
+      "username": "pedro@email.com",
+      "password": "123"
+    },
+    {
+      "id": "50c7",
+      "username": "malu@email.com",
+      "password": "malu"
+    },
+    {
+      "id": "c7b2",
+      "username": "carol@email.com",
+      "password": "carolina"
+    }
+  ]
+}

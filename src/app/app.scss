@@ -1,0 +1,290 @@
+.modern-toolbar,
+.toolbar-center {
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+  height: 64px;
+
+  /* Garantir que a toolbar ocupe toda a largura */
+  width: 100%;
+
+  .toolbar-left,
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1; /* Cada seção ocupa espaço igual */
+    height: 100%;
+  }
+
+  .toolbar-left {
+    justify-content: flex-start; /* Alinha à esquerda */
+  }
+
+  .toolbar-center {
+    justify-content: center; /* Centraliza o conteúdo */
+  }
+
+  .toolbar-right {
+    justify-content: flex-end; /* Alinha à direita */
+  }
+
+  .logo-button {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+    white-space: nowrap; /* Impede quebra de linha */
+
+    .title-text {
+      margin-left: 8px;
+    }
+
+    .mat-icon {
+      margin-right: 4px;
+      color: white !important;
+    }
+  }
+
+  /* Pesquisa */
+  .search-field {
+    margin-top: 20px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+
+    /* Remove bordas duplicadas */
+    ::ng-deep .mat-mdc-form-field-outline {
+      display: none !important;
+    }
+
+    /* Wrapper principal do campo */
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      color: white !important;
+      background: transparent !important;
+      padding: 0;
+    }
+
+    /* Container interno */
+    ::ng-deep .mat-mdc-form-field-flex {
+      height: 44px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 0 16px;
+    }
+
+    /* Remove elementos desnecessários que causam as linhas duplas */
+    ::ng-deep .mat-mdc-form-field-outline-start,
+    ::ng-deep .mat-mdc-form-field-outline-gap,
+    ::ng-deep .mat-mdc-form-field-outline-end {
+      border: none !important;
+    }
+
+    /* Texto digitado */
+    ::ng-deep input {
+      color: white !important;
+      font-weight: 500;
+      padding: 4px 0;
+    }
+
+    /* Label (placeholder flutuante) */
+    ::ng-deep .mat-mdc-floating-label {
+      color: white !important;
+      opacity: 0.9;
+      top: 50% !important;
+    }
+
+    /* Label quando sobe ao focar */
+    ::ng-deep .mdc-floating-label--float-above {
+      color: #90caf9 !important;
+      background: transparent;
+      padding: 0 4px;
+    }
+
+    /* Ícone do sufixo */
+    ::ng-deep .mat-mdc-form-field-icon-suffix {
+      padding: 0;
+      align-items: center;
+
+      .mat-icon {
+        color: white !important;
+      }
+    }
+
+    /* Remove sublinhado */
+    ::ng-deep .mat-mdc-form-field-underline {
+      display: none;
+    }
+
+    /* Remove o infix que pode estar causando problemas de layout */
+    ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline {
+      display: none;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    white-space: nowrap; /* Impede quebra de linha nos botões */
+
+    .register-button {
+      border-radius: 20px;
+    }
+  }
+}
+
+/* Pesquisa */
+.search-field {
+  width: 400px;
+
+  /* Remove bordas duplicadas */
+  ::ng-deep .mat-mdc-form-field-outline {
+    display: none !important;
+  }
+
+  /* Wrapper principal do campo */
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    color: white !important;
+    background: transparent !important;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 44px !important; /* Força altura específica */
+  }
+
+  /* Container interno */
+  ::ng-deep .mat-mdc-form-field-flex {
+    height: 44px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 0 16px;
+  }
+
+  /* Remove elementos desnecessários que causam as linhas duplas */
+  ::ng-deep .mat-mdc-form-field-outline-start,
+  ::ng-deep .mat-mdc-form-field-outline-gap,
+  ::ng-deep .mat-mdc-form-field-outline-end {
+    border: none !important;
+  }
+
+  /* Texto digitado */
+  ::ng-deep input {
+    color: white !important;
+    font-weight: 500;
+    padding: 4px 0;
+  }
+
+  /* Label (placeholder flutuante) */
+  ::ng-deep .mat-mdc-floating-label {
+    color: white !important;
+    opacity: 0.9;
+    top: 50% !important;
+  }
+
+  /* Label quando sobe ao focar */
+  ::ng-deep .mdc-floating-label--float-above {
+    color: #90caf9 !important;
+    background: transparent;
+    padding: 0 4px;
+  }
+
+  /* Ícone do sufixo */
+  ::ng-deep .mat-mdc-form-field-icon-suffix {
+    padding: 0;
+    align-items: center;
+
+    .mat-icon {
+      color: white !important;
+    }
+  }
+
+  /* Remove sublinhado */
+  ::ng-deep .mat-mdc-form-field-underline {
+    display: none;
+  }
+
+  /* Remove o infix que pode estar causando problemas de layout */
+  ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline {
+    display: none;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+
+  .register-button {
+    border-radius: 20px;
+  }
+}
+
+/* Menu de categorias */
+.categories-menu {
+  padding: 8px;
+
+  .mat-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    margin: 4px 0;
+
+    mat-icon {
+      margin-right: 0;
+    }
+  }
+}
+
+/* Paleta de cores para categorias */
+.category-color-0 mat-icon {
+  color: #ff6b6b;
+}
+.category-color-1 mat-icon {
+  color: #4ecdc4;
+}
+.category-color-2 mat-icon {
+  color: #45b7d1;
+}
+.category-color-3 mat-icon {
+  color: #f9a602;
+}
+.category-color-4 mat-icon {
+  color: #9b59b6;
+}
+.category-color-5 mat-icon {
+  color: #e74c3c;
+}
+.category-color-6 mat-icon {
+  color: #3498db;
+}
+.category-color-7 mat-icon {
+  color: #2ecc71;
+}
+
+/* Conteúdo principal */
+.content {
+  padding: 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Transições suaves */
+.mat-menu-item,
+.mat-button,
+.mat-raised-button {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Acessibilidade */
+.mat-button:focus,
+.mat-raised-button:focus,
+.mat-menu-item:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,54 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 10px; // Label flutuante não ser cortado pelo NovaPostagem
+}
+
+.full-width {
+  width: 100%;
+}
+
+// NOVO: Estilo para o título do dialog (azul igual login/register)
+mat-dialog-title {
+  color: #3f51b5; // Azul do Material Design
+  font-size: 20px;
+  font-weight: 500;
+  padding: 16px 24px 8px 24px;
+  margin: 0;
+}
+
+mat-dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 0 24px; // Adicionei padding lateral para melhor aparência
+}
+
+mat-dialog-actions {
+  padding: 16px 24px; // Padding lateral consistente
+  margin: 0;
+  border-top: 1px solid #e0e0e0;
+  background-color: #fafafa; // Fundo sutil igual outros forms
+}
+
+// Opcional: Melhorar a aparência dos botões
+mat-dialog-actions button {
+  margin-left: 8px;
+}
+
+// Opcional: Estilo consistente para os campos
+mat-form-field {
+  .mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.12);
+  }
+
+  &.mat-focused {
+    .mat-form-field-outline-thick {
+      color: #3f51b5;
+    }
+
+    .mat-form-field-label {
+      color: #3f51b5;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.search-form {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+.search-field {
+  flex: 2;
+}
+.filter-field {
+  flex: 1;
+}

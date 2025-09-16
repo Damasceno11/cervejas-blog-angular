@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? 'Editar Postagem' : 'Nova Postagem' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="postForm" class="post-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" required />
+      <mat-error *ngIf="postForm.get('title')?.hasError('required')">
+        Título é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Autor</mat-label>
+      <input matInput formControlName="author" required />
+      <mat-error *ngIf="postForm.get('author')?.hasError('required')">
+        Autor é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="category" required>
+        <mat-option *ngFor="let category of categories" [value]="category.name">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="postForm.get('category')?.hasError('required')">
+        Categoria é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Conteúdo</mat-label>
+      <textarea matInput formControlName="content" rows="6" required></textarea>
+      <mat-error *ngIf="postForm.get('content')?.hasError('required')">
+        Conteúdo é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>URL da Imagem (opcional)</mat-label>
+      <input matInput formControlName="imageUrl" placeholder="https://exemplo.com/imagem.jpg" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!postForm.valid">
+    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>

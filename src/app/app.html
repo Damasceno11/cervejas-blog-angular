@@ -1,0 +1,70 @@
+<mat-toolbar color="primary" class="modern-toolbar">
+  <!-- Logo -->
+  <div class="toolbar-left">
+    <a mat-button class="logo-button" routerLink="/" (click)="clearFilters()">
+      <mat-icon>sports_bar</mat-icon>
+      <span class="title-text">{{ title }}</span>
+    </a>
+  </div>
+
+  <div class="toolbar-center">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Pesquisar postagens...</mat-label>
+      <input matInput [formControl]="searchControl" (keyup.enter)="onSearch()" />
+
+      <!-- Botão de limpar (aparece apenas quando há texto) -->
+      <button *ngIf="searchControl.value" mat-icon-button matSuffix (click)="clearFilters()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <!-- Botão de pesquisa -->
+      <button mat-icon-button matSuffix (click)="onSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <!-- Botões à direita -->
+  <div class="toolbar-right">
+    <!-- Categorias -->
+    <button mat-button [matMenuTriggerFor]="categoryMenu">
+      <mat-icon>category</mat-icon>
+      Categorias
+    </button>
+
+    <!-- Botões de ação -->
+    <div class="action-buttons">
+      <a mat-button routerLink="/login">
+        <mat-icon>login</mat-icon>
+        Login
+      </a>
+      <a mat-raised-button color="accent" routerLink="/register" class="register-button">
+        <mat-icon>person_add</mat-icon>
+        Cadastro
+      </a>
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- Menu de categorias -->
+<mat-menu #categoryMenu="matMenu" class="categories-menu">
+  <!-- CORRIGIDO: Agora chama a função de filtro -->
+  <button mat-menu-item (click)="filterByCategory('')">
+    <mat-icon>apps</mat-icon>
+    <span>Todas as categorias</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button
+    mat-menu-item
+    *ngFor="let category of categories; let i = index"
+    (click)="filterByCategory(category.name)"
+    [ngClass]="'category-color-' + (i % 8)"
+  >
+    <mat-icon>lens</mat-icon>
+    <span>{{ category.name }}</span>
+  </button>
+</mat-menu>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

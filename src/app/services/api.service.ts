@@ -24,7 +24,7 @@ export interface Category {
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://cervejas-api-fu2o.onrender.com';
 
   constructor(private http: HttpClient) {}
 

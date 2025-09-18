@@ -1,4 +1,3 @@
-/* A importação DEVE ser a primeira linha do arquivo */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* Estilos globais básicos */
@@ -24,7 +23,7 @@ body {
 .post-image {
   width: 100%;
   height: 300px;
-  object-fit: auto;
+  object-fit: cover;
   object-position: center;
 }
 
@@ -35,7 +34,6 @@ body {
   padding: 0 24px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* Permite que os itens quebrem a linha */
   justify-content: space-between;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -43,6 +41,7 @@ body {
   min-height: 72px; /* Usa min-height para permitir que a altura cresça */
   width: 100%;
   box-sizing: border-box; /* Garante que o padding não afete a largura total */
+  gap: 16px;
 
   .toolbar-left,
   .toolbar-right {
@@ -70,26 +69,24 @@ body {
     font-size: 1.4rem;
     text-decoration: none;
     white-space: nowrap;
+    color: white;
+  }
 
-    .title-text {
-      margin-left: 8px;
-    }
+  .logo-button .title-text {
+    margin-left: 8px;
+  }
 
-    .mat-icon {
-      //margin-right: 4px;
-      transform: scale(1.15); /* Aumentei o tamanho do ícone. */
-      color: white !important;
-    }
+  .logo-button .mat-icon {
+    transform: scale(1.15); /* Aumentei o tamanho do ícone. */
+    color: white !important;
   }
 
   .search-field {
-    width: 100%; /* Ocupa o espaço disponível no .toolbar-center */
-    max-width: 450px; /* Largura máxima em desktops */
-    display: flex;
-    justify-content: center;
-    margin-top: 12px;
+    width: 100%;
+    max-width: 450px;
+    margin-top: 22px;
 
-    /* Estilos do Material Design para o campo de busca */
+    /* Estilos do Material para a busca */
     ::ng-deep .mat-mdc-form-field-flex {
       height: 48px;
       align-items: center;
@@ -97,26 +94,20 @@ body {
       border-radius: 24px;
       padding: 0 16px;
     }
-
     ::ng-deep .mat-mdc-text-field-wrapper {
       background: transparent !important;
       padding: 0;
     }
-
     ::ng-deep input,
     ::ng-deep .mat-mdc-floating-label {
       color: white !important;
     }
-
     ::ng-deep .mdc-floating-label--float-above {
       color: #90caf9 !important;
     }
-
     ::ng-deep .mat-mdc-form-field-icon-suffix .mat-icon {
       color: white !important;
     }
-
-    /* Remove bordas e linhas desnecessárias */
     ::ng-deep .mat-mdc-form-field-outline,
     ::ng-deep .mat-mdc-form-field-underline,
     ::ng-deep .mdc-notched-outline {
@@ -130,28 +121,51 @@ body {
     gap: 12px;
     white-space: nowrap;
 
-    /* Aumenta o tamanho dos ícones e texto nos botões */
-    .mat-icon {
-      transform: scale(1.15);
-    }
     button,
     a {
       font-size: 15px;
     }
+
+    /* [NOVO] Estilo para o botão de Cadastro rosa */
     .register-button {
+      background-color: #e91e63; /* Cor rosa/pink */
+      color: white;
       border-radius: 20px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #c2185b; /* Um tom mais escuro para o hover */
+      }
     }
   }
 }
 
 /* ================================================= */
-/* MEDIA QUERY PARA DISPOSITIVOS MÓVEIS (Telas < 768px) */
+/* MEDIA QUERIES PARA RESPONSIVIDADE */
 /* ================================================= */
+
+/* [NOVO] Breakpoint para Tablets e telas médias (entre 769px e 992px) */
+@media (max-width: 992px) {
+  .modern-toolbar {
+    .search-field {
+      max-width: 250px; /* Diminui a barra de busca para caber */
+    }
+
+    /* Esconde o TEXTO dos botões de ação, mantendo só os ícones */
+    .action-buttons .button-text {
+      display: none;
+    }
+  }
+}
+
+/* Dispositivos Móveis (768px ou menos) */
 @media (max-width: 768px) {
   .modern-toolbar {
-    height: auto; /* A altura se ajustará ao conteúdo */
-    padding-top: 8px;
-    padding-bottom: 8px;
+    flex-wrap: wrap; /* AGORA SIM permitimos a quebra de linha */
+    height: auto;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    min-height: 64px;
 
     /* A seção da esquerda e direita ocuparão a primeira linha */
     .toolbar-left,
@@ -162,21 +176,87 @@ body {
 
     /* A barra de pesquisa irá para a segunda linha */
     .toolbar-center {
-      order: 3; /* Manda para o final da ordem do flexbox */
+      order: 3;
       width: 100%;
-      margin-top: 8px; /* Espaçamento entre as linhas */
-      min-width: unset; /* Remove a largura mínima no mobile */
+      margin-top: 1px;
+      min-width: unset;
     }
 
     .search-field {
-      margin-top: 0;
+      max-width: 100%;
+    }
+    .logo-button .title-text {
+      font-size: 1.5rem;
     }
 
-    /* Opcional: Esconde o texto dos botões, mostrando apenas os ícones */
-    .action-buttons a[mat-button] span,
-    .toolbar-right > button[mat-button] > span {
+    /* Garante que os textos que já estavam escondidos continuem assim */
+    .action-buttons .button-text {
       display: none;
     }
+  }
+
+  .content {
+    padding: 16px 8px;
+  }
+  .mat-card {
+    margin: 8px;
+    border-radius: 8px;
+  }
+  .post-image {
+    height: 250px;
+  }
+}
+
+/* Dispositivos Móveis Pequenos (480px ou menos) */
+@media (max-width: 480px) {
+  .modern-toolbar {
+    padding: 0 12px;
+    .logo-button {
+      font-size: 1rem;
+      .title-text {
+        font-size: 1rem;
+      }
+      .mat-icon {
+        transform: scale(1);
+      }
+    }
+    .toolbar-left,
+    .toolbar-right {
+      gap: 8px;
+    }
+    .action-buttons {
+      gap: 6px;
+    }
+  }
+
+  .content {
+    padding: 12px 4px;
+  }
+  .post-image {
+    height: 200px;
+  }
+  .mat-card {
+    margin: 8px 4px;
+  }
+}
+
+/* ================================================= */
+/* ESTILOS PARA O INDICADOR DE CARREGAMENTO (mantido em cinza) */
+/* ================================================= */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+
+  .loading-spinner {
+    color: #9e9e9e; /* Cor cinza padrão */
+  }
+
+  .loading-text {
+    margin-left: 16px;
+    color: #757575; /* Texto em cinza */
+    font-size: 16px;
   }
 }
 

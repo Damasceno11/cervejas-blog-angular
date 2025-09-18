@@ -1,5 +1,4 @@
 <mat-toolbar color="primary" class="modern-toolbar">
-  <!-- Logo -->
   <div class="toolbar-left">
     <a mat-button class="logo-button" routerLink="/" (click)="resetView()">
       <mat-icon>sports_bar</mat-icon>
@@ -12,31 +11,26 @@
       <mat-label>Pesquisar postagens...</mat-label>
       <input matInput [formControl]="searchControl" (keyup.enter)="onSearch()" />
 
-      <!-- Botão de limpar (aparece apenas quando há texto) -->
       <button *ngIf="searchControl.value" mat-icon-button matSuffix (click)="clearSearch()">
         <mat-icon>close</mat-icon>
       </button>
 
-      <!-- Botão de pesquisa -->
       <button mat-icon-button matSuffix (click)="onSearch()">
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
   </div>
 
-  <!-- Botões à direita -->
   <div class="toolbar-right">
-    <!-- Categorias -->
     <button mat-button [matMenuTriggerFor]="categoryMenu">
       <mat-icon>category</mat-icon>
-      <span>Categorias</span>
+      <span class="button-text">Categorias</span>
     </button>
 
-    <!-- Botões de ação -->
     <div class="action-buttons">
       <a mat-button routerLink="/login">
         <mat-icon>login</mat-icon>
-        <span>Login</span>
+        <span class="button-text">Login</span>
       </a>
       <a mat-raised-button color="accent" routerLink="/register" class="register-button">
         <mat-icon>person_add</mat-icon>
@@ -46,7 +40,6 @@
   </div>
 </mat-toolbar>
 
-<!-- Menu de categorias -->
 <mat-menu #categoryMenu="matMenu" class="categories-menu">
   <button mat-menu-item (click)="filterByCategory('')">
     <mat-icon>apps</mat-icon>

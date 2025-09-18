@@ -10,34 +10,54 @@
     <mat-icon>add</mat-icon> Adicionar Nova Categoria
   </button>
 
-  <div class="table-container">
-    <table mat-table [dataSource]="categories" class="mat-elevation-z8">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Nome da Categoria</th>
-        <td mat-cell *matCellDef="let element">
-          <span class="category-name">{{ element.name }}</span>
-        </td>
-      </ng-container>
+  <!--
+    Usamos *ngIf para verificar se o nosso observable 'categories$' já emitiu um valor.
+    A sintaxe 'as categories' cria uma variável local 'categories' que podemos usar com segurança.
+    O 'else loading' mostra um template de carregamento enquanto esperamos pela resposta da API.
+  -->
+  <div *ngIf="categories$ | async as categories; else loading">
+    <!-- Se a lista de categorias estiver vazia, mostramos a mensagem de "nenhuma categoria". -->
+    <div *ngIf="categories.length === 0" class="no-categories">
+      <mat-icon>category</mat-icon>
+      <p>Nenhuma categoria cadastrada.</p>
+    </div>
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Ações</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" (click)="openCategoryDialog(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteCategory(element.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+    <!-- Se a lista TIVER itens, mostramos a tabela. -->
+    <div *ngIf="categories.length > 0" class="table-container">
+      <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+        <!-- Coluna 'name' -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nome da Categoria</th>
+          <!-- CORREÇÃO CRÍTICA: A diretiva correta é 'matCellDef', e não 'matDef'. -->
+          <td mat-cell *matCellDef="let element">
+            <span class="category-name">{{ element.name }}</span>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+        <!-- Coluna 'actions' -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <!-- CORREÇÃO CRÍTICA: A diretiva correta é 'matCellDef', e não 'matDef'. -->
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="openCategoryDialog(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCategory(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
   </div>
 
-  <div *ngIf="categories.length === 0" class="no-categories">
-    <mat-icon>category</mat-icon>
-    <p>Nenhuma categoria cadastrada.</p>
-  </div>
+  <!-- Este bloco é mostrado apenas enquanto o *ngIf principal está à espera do primeiro valor do observable -->
+  <ng-template #loading>
+    <div class="no-categories">
+      <p>A carregar categorias...</p>
+    </div>
+  </ng-template>
 </div>

@@ -23,7 +23,11 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Categoria</mat-label>
       <mat-select formControlName="category" required>
-        <mat-option *ngFor="let category of categories" [value]="category.name">
+        <!--
+          CORREÇÃO: Usamos o pipe 'async' para extrair os dados do observable categories$
+          e então iteramos sobre o array resultante com *ngFor.
+        -->
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.name">
           {{ category.name }}
         </mat-option>
       </mat-select>

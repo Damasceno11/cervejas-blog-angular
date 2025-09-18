@@ -7,6 +7,7 @@ import { ApiService, Category, Post } from '../../services/api.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -23,60 +24,36 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './home.scss',
 })
 export class Home implements OnInit, OnDestroy {
-  posts: Post[] = [];
-  categories: Category[] = [];
+  posts$: Observable<Post[]>;
+  categories$: Observable<Category[]>;
   private destroy$ = new Subject<void>();
   loading: boolean = false;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {}
+  // Variáveis para o estado atual dos filtros
+  currentCategory = '';
+  currentSearch = '';
+
+  constructor(private apiService: ApiService, private route: ActivatedRoute) {
+    // 2. Conectamos as nossas variáveis locais aos observables PÚBLICOS do serviço.
+    this.categories$ = this.apiService.categories$;
+
+    // 3. A lógica para buscar os posts agora também é reativa.
+    // Ela "ouve" as mudanças nos parâmetros da URL e busca os posts correspondentes.
+    this.posts$ = this.route.queryParams.pipe(
+      switchMap((params) => {
+        this.currentCategory = params['category'] || '';
+        this.currentSearch = params['search'] || '';
+        return this.apiService.getPosts(this.currentCategory, this.currentSearch);
+      })
+    );
+  }
 
   ngOnInit(): void {
-    console.log('Home inicializado');
-    this.loadCategories();
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      console.log('Parâmetros da URL mudaram:', params);
-      const category = params['category'];
-      const query = params['q'];
-      this.loadPosts(category, query);
-    });
+    this.apiService.refreshCategories().subscribe();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  loadCategories(): void {
-    this.apiService
-      .getCategories()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          this.categories = data;
-          console.log('Categorias carregadas: ', this.categories);
-        },
-        error: (error) => {
-          console.error('Erro ao carregar categorias', error);
-        },
-      });
-  }
-
-  loadPosts(category?: string, query?: string): void {
-    console.log('Carregando posts. Categoria:', category, 'Query:', query);
-    this.loading = true;
-    this.apiService
-      .getPosts(category, query)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          console.log('Posts recebidos:', data.length, 'posts');
-          this.posts = data;
-          this.loading = false;
-        },
-        error: (error) => {
-          console.error('Erro ao carregar posts:', error);
-          this.loading = false;
-        },
-      });
   }
 }

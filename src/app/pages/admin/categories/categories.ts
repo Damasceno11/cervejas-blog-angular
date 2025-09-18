@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { CategoryDialog } from './category-dialog/category-dialog';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,22 +27,18 @@ import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog
 })
 export class Categories implements OnInit {
   displayedColumns: string[] = ['name', 'actions'];
-  categories: Category[] = [];
+  categories$: Observable<Category[]>;
 
   constructor(
     private apiService: ApiService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
-
-  ngOnInit(): void {
-    this.loadCategories();
+  ) {
+    this.categories$ = this.apiService.categories$;
   }
 
-  loadCategories(): void {
-    this.apiService.getCategories().subscribe((data) => {
-      this.categories = data;
-    });
+  ngOnInit(): void {
+    this.apiService.refreshCategories().subscribe();
   }
 
   openCategoryDialog(category?: Category): void {
@@ -52,7 +49,6 @@ export class Categories implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.loadCategories();
         this.snackBar.open('Categoria salva com sucesso!', 'Fechar', { duration: 3000 });
       }
     });
@@ -67,7 +63,6 @@ export class Categories implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.apiService.deleteCategory(id).subscribe(() => {
-          this.loadCategories();
           this.snackBar.open('Categoria excluída!', 'Fechar', { duration: 3000 });
         });
       }

@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="modern-toolbar">
   <!-- Logo -->
   <div class="toolbar-left">
-    <a mat-button class="logo-button" routerLink="/" (click)="clearFilters()">
+    <a mat-button class="logo-button" routerLink="/" (click)="resetView()">
       <mat-icon>sports_bar</mat-icon>
       <span class="title-text">{{ title }}</span>
     </a>
@@ -13,7 +13,7 @@
       <input matInput [formControl]="searchControl" (keyup.enter)="onSearch()" />
 
       <!-- Botão de limpar (aparece apenas quando há texto) -->
-      <button *ngIf="searchControl.value" mat-icon-button matSuffix (click)="clearFilters()">
+      <button *ngIf="searchControl.value" mat-icon-button matSuffix (click)="clearSearch()">
         <mat-icon>close</mat-icon>
       </button>
 
@@ -29,18 +29,18 @@
     <!-- Categorias -->
     <button mat-button [matMenuTriggerFor]="categoryMenu">
       <mat-icon>category</mat-icon>
-      Categorias
+      <span>Categorias</span>
     </button>
 
     <!-- Botões de ação -->
     <div class="action-buttons">
       <a mat-button routerLink="/login">
         <mat-icon>login</mat-icon>
-        Login
+        <span>Login</span>
       </a>
       <a mat-raised-button color="accent" routerLink="/register" class="register-button">
         <mat-icon>person_add</mat-icon>
-        Cadastro
+        <span>Cadastro</span>
       </a>
     </div>
   </div>
@@ -48,7 +48,6 @@
 
 <!-- Menu de categorias -->
 <mat-menu #categoryMenu="matMenu" class="categories-menu">
-  <!-- CORRIGIDO: Agora chama a função de filtro -->
   <button mat-menu-item (click)="filterByCategory('')">
     <mat-icon>apps</mat-icon>
     <span>Todas as categorias</span>
@@ -56,7 +55,7 @@
   <mat-divider></mat-divider>
   <button
     mat-menu-item
-    *ngFor="let category of categories; let i = index"
+    *ngFor="let category of categories$ | async; let i = index"
     (click)="filterByCategory(category.name)"
     [ngClass]="'category-color-' + (i % 8)"
   >

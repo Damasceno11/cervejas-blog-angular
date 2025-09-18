@@ -1,12 +1,20 @@
 <div class="post-details-container">
-  <!-- Loading -->
-  <div *ngIf="loading" class="loading">
+  <!--
+    DEPOIS: Usamos uma cadeia @if / @else if / @else.
+    Isso é muito mais limpo e legível do que múltiplos *ngIf com condições complexas.
+    O Angular avalia uma condição de cada vez.
+  -->
+
+  <!-- 1. Primeiro, verifica se está carregando -->
+  @if (loading) {
+  <div class="loading">
     <mat-spinner diameter="50"></mat-spinner>
     <p>Carregando postagem...</p>
   </div>
-
-  <!-- Erro -->
-  <div *ngIf="!loading && error" class="error">
+  }
+  <!-- 2. Se não estiver carregando, verifica se há um erro -->
+  @else if (error) {
+  <div class="error">
     <mat-icon>error_outline</mat-icon>
     <h3>Oops! Algo deu errado</h3>
     <p>{{ error }}</p>
@@ -21,9 +29,10 @@
       </button>
     </div>
   </div>
-
-  <!-- Post encontrado -->
-  <div *ngIf="!loading && !error && post" class="post-content">
+  }
+  <!-- 3. Se não houver erro, verifica se o post existe -->
+  @else if (post) {
+  <div class="post-content">
     <mat-card class="post-card">
       <img
         [src]="post.imageUrl || 'assets/default-post.jpg'"
@@ -35,26 +44,30 @@
         <mat-card-title>{{ post.title }}</mat-card-title>
         <mat-card-subtitle>
           {{ post.category }} | Por {{ post.author }}
-          <span *ngIf="post.views">• {{ post.views }} visualizações</span>
+          <!-- O *ngIf simples pode ser mantido ou trocado por @if -->
+          @if(post.views) {
+          <span>• {{ post.views }} visualizações</span>
+          }
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p class="post-content-text">{{ post.content }}</p>
-        <p class="post-date" *ngIf="post.date">
-          Publicado em: {{ post.date | date : 'dd/MM/yyyy' }}
-        </p>
+        @if(post.date) {
+        <p class="post-date">Publicado em: {{ post.date | date : 'dd/MM/yyyy' }}</p>
+        }
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="goBack()">
+        <button mat-button class="back-button" (click)="goBack()">
           <mat-icon>arrow_back</mat-icon>
           VOLTAR
         </button>
       </mat-card-actions>
     </mat-card>
   </div>
-
-  <!-- Post não encontrado -->
-  <div *ngIf="!loading && !error && !post" class="not-found">
+  }
+  <!-- 4. Se nenhuma das condições acima for verdadeira, mostra a mensagem "não encontrado" -->
+  @else {
+  <div class="not-found">
     <mat-icon>article</mat-icon>
     <h3>Postagem não encontrada</h3>
     <p>A postagem que você está procurando não existe ou foi removida.</p>
@@ -62,4 +75,5 @@
       Voltar para a página inicial
     </button>
   </div>
+  }
 </div>

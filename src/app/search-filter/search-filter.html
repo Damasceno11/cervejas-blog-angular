@@ -9,7 +9,7 @@
     <mat-label>Filtrar por categoria</mat-label>
     <mat-select formControlName="category">
       <mat-option value="">Todas</mat-option>
-      <mat-option *ngFor="let category of categories" [value]="category.name">{{
+      <mat-option *ngFor="let category of categories$ | async" [value]="category.name">{{
         category.name
       }}</mat-option>
     </mat-select>

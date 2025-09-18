@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 export interface Post {
   id: string | number;
@@ -25,6 +24,14 @@ export interface Category {
 })
 export class ApiService {
   private apiUrl = 'https://cervejas-api-fu2o.onrender.com';
+  // 1. CRIAMOS NOSSO ARMAZENAMENTO REATIVO (STATE)
+  // BehaviorSubject guarda o último valor emitido e o entrega para novos inscritos.
+  private categoriesSubject = new BehaviorSubject<Category[]>([]);
+
+  // 2. CRIAMOS UM OBSERVABLE PÚBLICO
+  // Os componentes vão "ouvir" este observable para receber a lista de categorias.
+  // O '$' no final é uma convenção para indicar que a variável é um Observable.
+  public categories$ = this.categoriesSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -95,12 +102,6 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  getCategories(): Observable<Category[]> {
-    return this.http
-      .get<Category[]>(`${this.apiUrl}/categories`)
-      .pipe(catchError(this.handleError));
-  }
-
   login(username: string, password: string): Observable<any[]> {
     return this.http
       .get<any[]>(`${this.apiUrl}/users?username=${username}&password=${password}`)
@@ -136,21 +137,46 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}/users`, newUser).pipe(catchError(this.handleError));
   }
 
+  // 3. MÉTODO PARA BUSCAR E ATUALIZAR AS CATEGORIAS NO BEHAVIORSUBJECT
+  // Este método busca na API e emite a nova lista para todos os "ouvintes".
+  refreshCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.apiUrl}/categories`).pipe(
+      tap((categories) => {
+        // GARANTIA 1: Se a API retornar um valor "falsy" (null, undefined),
+        // nós emitimos um array vazio em vez disso.
+        this.categoriesSubject.next(categories || []);
+      }),
+      catchError((error) => {
+        // GARANTIA 2: Se a chamada da API der um ERRO,
+        // nós emitimos um array vazio para que a UI não quebre.
+        this.categoriesSubject.next([]);
+        this.handleError(error); // Continua tratando o erro como antes.
+        return throwError(() => error);
+      })
+    );
+  }
+
   createCategory(category: { name: string }): Observable<Category> {
-    return this.http
-      .post<Category>(`${this.apiUrl}/categories`, category)
-      .pipe(catchError(this.handleError));
+    return this.http.post<Category>(`${this.apiUrl}/categories`, category).pipe(
+      // Após criar com sucesso, usamos o operador 'tap' para disparar a atualização da lista.
+      tap(() => this.refreshCategories().subscribe()),
+      catchError(this.handleError)
+    );
   }
 
   updateCategory(id: number, category: { name: string }): Observable<Category> {
-    return this.http
-      .patch<Category>(`${this.apiUrl}/categories/${id}`, category)
-      .pipe(catchError(this.handleError));
+    return this.http.patch<Category>(`${this.apiUrl}/categories/${id}`, category).pipe(
+      // Após atualizar, também disparamos a atualização.
+      tap(() => this.refreshCategories().subscribe()),
+      catchError(this.handleError)
+    );
   }
 
   deleteCategory(id: number): Observable<any> {
-    return this.http
-      .delete<any>(`${this.apiUrl}/categories/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete<any>(`${this.apiUrl}/categories/${id}`).pipe(
+      // Após deletar, também disparamos a atualização.
+      tap(() => this.refreshCategories().subscribe()),
+      catchError(this.handleError)
+    );
   }
 }

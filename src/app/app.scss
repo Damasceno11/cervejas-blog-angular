@@ -1,248 +1,202 @@
-.modern-toolbar,
-.toolbar-center {
-  padding: 0 16px;
+/* A importação DEVE ser a primeira linha do arquivo */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Estilos globais básicos */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.mat-toolbar.mat-primary {
+  background-color: #1976d2;
+  color: white;
+}
+
+.mat-card {
+  margin: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-image {
+  width: 100%;
+  height: 300px;
+  object-fit: auto;
+  object-position: center;
+}
+
+/* ================================================= */
+/* ESTILOS DA TOOLBAR COM AJUSTES RESPONSIVOS */
+/* ================================================= */
+.modern-toolbar {
+  padding: 0 24px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-wrap: wrap; /* Permite que os itens quebrem a linha */
+  justify-content: space-between;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 10;
-  height: 64px;
-
-  /* Garantir que a toolbar ocupe toda a largura */
+  min-height: 72px; /* Usa min-height para permitir que a altura cresça */
   width: 100%;
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
 
   .toolbar-left,
   .toolbar-right {
     display: flex;
     align-items: center;
     gap: 16px;
-    flex: 1; /* Cada seção ocupa espaço igual */
-    height: 100%;
   }
 
   .toolbar-left {
-    justify-content: flex-start; /* Alinha à esquerda */
+    flex-shrink: 0; /* Impede que o logo encolha */
   }
 
   .toolbar-center {
-    justify-content: center; /* Centraliza o conteúdo */
-  }
-
-  .toolbar-right {
-    justify-content: flex-end; /* Alinha à direita */
+    flex-grow: 1; /* Permite que o centro cresça e ocupe o espaço */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px; /* Largura mínima para o campo de busca */
   }
 
   .logo-button {
     display: flex;
     align-items: center;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-decoration: none;
-    white-space: nowrap; /* Impede quebra de linha */
+    white-space: nowrap;
 
     .title-text {
       margin-left: 8px;
     }
 
     .mat-icon {
-      margin-right: 4px;
+      //margin-right: 4px;
+      transform: scale(1.15); /* Aumentei o tamanho do ícone. */
       color: white !important;
     }
   }
 
-  /* Pesquisa */
   .search-field {
-    margin-top: 20px;
-    width: 400px;
+    width: 100%; /* Ocupa o espaço disponível no .toolbar-center */
+    max-width: 450px; /* Largura máxima em desktops */
     display: flex;
     justify-content: center;
+    margin-top: 12px;
 
-    /* Remove bordas duplicadas */
-    ::ng-deep .mat-mdc-form-field-outline {
-      display: none !important;
-    }
-
-    /* Wrapper principal do campo */
-    ::ng-deep .mat-mdc-text-field-wrapper {
-      color: white !important;
-      background: transparent !important;
-      padding: 0;
-    }
-
-    /* Container interno */
+    /* Estilos do Material Design para o campo de busca */
     ::ng-deep .mat-mdc-form-field-flex {
-      height: 44px;
+      height: 48px;
       align-items: center;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 24px;
       padding: 0 16px;
     }
 
-    /* Remove elementos desnecessários que causam as linhas duplas */
-    ::ng-deep .mat-mdc-form-field-outline-start,
-    ::ng-deep .mat-mdc-form-field-outline-gap,
-    ::ng-deep .mat-mdc-form-field-outline-end {
-      border: none !important;
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background: transparent !important;
+      padding: 0;
     }
 
-    /* Texto digitado */
-    ::ng-deep input {
-      color: white !important;
-      font-weight: 500;
-      padding: 4px 0;
-    }
-
-    /* Label (placeholder flutuante) */
+    ::ng-deep input,
     ::ng-deep .mat-mdc-floating-label {
       color: white !important;
-      opacity: 0.9;
-      top: 50% !important;
     }
 
-    /* Label quando sobe ao focar */
     ::ng-deep .mdc-floating-label--float-above {
       color: #90caf9 !important;
-      background: transparent;
-      padding: 0 4px;
     }
 
-    /* Ícone do sufixo */
-    ::ng-deep .mat-mdc-form-field-icon-suffix {
-      padding: 0;
-      align-items: center;
-
-      .mat-icon {
-        color: white !important;
-      }
+    ::ng-deep .mat-mdc-form-field-icon-suffix .mat-icon {
+      color: white !important;
     }
 
-    /* Remove sublinhado */
-    ::ng-deep .mat-mdc-form-field-underline {
-      display: none;
-    }
-
-    /* Remove o infix que pode estar causando problemas de layout */
-    ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline {
-      display: none;
+    /* Remove bordas e linhas desnecessárias */
+    ::ng-deep .mat-mdc-form-field-outline,
+    ::ng-deep .mat-mdc-form-field-underline,
+    ::ng-deep .mdc-notched-outline {
+      display: none !important;
     }
   }
 
   .action-buttons {
     display: flex;
-    gap: 8px;
-    white-space: nowrap; /* Impede quebra de linha nos botões */
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
 
+    /* Aumenta o tamanho dos ícones e texto nos botões */
+    .mat-icon {
+      transform: scale(1.15);
+    }
+    button,
+    a {
+      font-size: 15px;
+    }
     .register-button {
       border-radius: 20px;
     }
   }
 }
 
-/* Pesquisa */
-.search-field {
-  width: 400px;
+/* ================================================= */
+/* MEDIA QUERY PARA DISPOSITIVOS MÓVEIS (Telas < 768px) */
+/* ================================================= */
+@media (max-width: 768px) {
+  .modern-toolbar {
+    height: auto; /* A altura se ajustará ao conteúdo */
+    padding-top: 8px;
+    padding-bottom: 8px;
 
-  /* Remove bordas duplicadas */
-  ::ng-deep .mat-mdc-form-field-outline {
-    display: none !important;
-  }
+    /* A seção da esquerda e direita ocuparão a primeira linha */
+    .toolbar-left,
+    .toolbar-right {
+      width: 100%;
+      justify-content: space-between;
+    }
 
-  /* Wrapper principal do campo */
-  ::ng-deep .mat-mdc-text-field-wrapper {
-    color: white !important;
-    background: transparent !important;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    height: 44px !important; /* Força altura específica */
-  }
+    /* A barra de pesquisa irá para a segunda linha */
+    .toolbar-center {
+      order: 3; /* Manda para o final da ordem do flexbox */
+      width: 100%;
+      margin-top: 8px; /* Espaçamento entre as linhas */
+      min-width: unset; /* Remove a largura mínima no mobile */
+    }
 
-  /* Container interno */
-  ::ng-deep .mat-mdc-form-field-flex {
-    height: 44px;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 0 16px;
-  }
+    .search-field {
+      margin-top: 0;
+    }
 
-  /* Remove elementos desnecessários que causam as linhas duplas */
-  ::ng-deep .mat-mdc-form-field-outline-start,
-  ::ng-deep .mat-mdc-form-field-outline-gap,
-  ::ng-deep .mat-mdc-form-field-outline-end {
-    border: none !important;
-  }
-
-  /* Texto digitado */
-  ::ng-deep input {
-    color: white !important;
-    font-weight: 500;
-    padding: 4px 0;
-  }
-
-  /* Label (placeholder flutuante) */
-  ::ng-deep .mat-mdc-floating-label {
-    color: white !important;
-    opacity: 0.9;
-    top: 50% !important;
-  }
-
-  /* Label quando sobe ao focar */
-  ::ng-deep .mdc-floating-label--float-above {
-    color: #90caf9 !important;
-    background: transparent;
-    padding: 0 4px;
-  }
-
-  /* Ícone do sufixo */
-  ::ng-deep .mat-mdc-form-field-icon-suffix {
-    padding: 0;
-    align-items: center;
-
-    .mat-icon {
-      color: white !important;
+    /* Opcional: Esconde o texto dos botões, mostrando apenas os ícones */
+    .action-buttons a[mat-button] span,
+    .toolbar-right > button[mat-button] > span {
+      display: none;
     }
   }
-
-  /* Remove sublinhado */
-  ::ng-deep .mat-mdc-form-field-underline {
-    display: none;
-  }
-
-  /* Remove o infix que pode estar causando problemas de layout */
-  ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline {
-    display: none;
-  }
 }
 
-.action-buttons {
-  display: flex;
-  gap: 8px;
-
-  .register-button {
-    border-radius: 20px;
-  }
-}
-
-/* Menu de categorias */
+/* ================================================= */
+/* OUTROS ESTILOS (Menu, Cores, etc.) */
+/* ================================================= */
 .categories-menu {
   padding: 8px;
-
   .mat-menu-item {
     display: flex;
     align-items: center;
     gap: 12px;
     border-radius: 8px;
     margin: 4px 0;
-
     mat-icon {
       margin-right: 0;
     }
   }
 }
 
-/* Paleta de cores para categorias */
 .category-color-0 mat-icon {
   color: #ff6b6b;
 }
@@ -268,21 +222,18 @@
   color: #2ecc71;
 }
 
-/* Conteúdo principal */
 .content {
   padding: 24px 16px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Transições suaves */
 .mat-menu-item,
 .mat-button,
 .mat-raised-button {
   transition: all 0.2s ease-in-out;
 }
 
-/* Acessibilidade */
 .mat-button:focus,
 .mat-raised-button:focus,
 .mat-menu-item:focus {

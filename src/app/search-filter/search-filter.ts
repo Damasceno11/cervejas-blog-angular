@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Category, ApiService } from '../services/api.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-filter',
@@ -27,7 +28,7 @@ import { Category, ApiService } from '../services/api.service';
 })
 export class SearchFilter implements OnInit, OnDestroy {
   searchForm: FormGroup;
-  categories: Category[] = [];
+  categories$: Observable<Category[]>;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -36,6 +37,7 @@ export class SearchFilter implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private apiService: ApiService
   ) {
+    this.categories$ = this.apiService.categories$;
     this.searchForm = this.fb.group({
       query: [''],
       category: [''],
@@ -43,28 +45,12 @@ export class SearchFilter implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadCategories();
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      this.searchForm.patchValue({
-        query: params['q'] || '',
-        category: params['category'] || '',
-      });
-    });
+    this.apiService.refreshCategories().subscribe();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  loadCategories(): void {
-    this.apiService
-      .getCategories()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => (this.categories = data),
-        error: (error) => console.error('Erro ao carregar categorias:', error),
-      });
   }
 
   search(): void {

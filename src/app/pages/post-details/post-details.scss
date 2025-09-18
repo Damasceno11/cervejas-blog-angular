@@ -1,10 +1,12 @@
-// Cores e variáveis padrão
+/* Cores temáticas de cerveja */
 :root {
-  --primary-color: #2196f3;
-  --text-color: #333;
-  --secondary-text-color: #757575;
-  --background-color: #f5f5f5;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --primary-color: #bf360c; /* Laranja/cobre queimado, como uma IPA */
+  --text-color: #4a2c2a; /* Cor de café/stout para o texto principal */
+  --secondary-text-color: #8d6e63; /* Um marrom mais claro para subtítulos */
+  --background-color: #fcfaf5; /* Fundo da página, um branco cremoso */
+  --card-background-color: #fff8e1; /* Fundo do card, amarelo claro (pilsen) */
+  --border-color: #ffd54f; /* Borda dourada */
+  --shadow-color: rgba(255, 193, 7, 0.2); /* Sombra em tom de âmbar */
 }
 
 .post-details-container {
@@ -17,6 +19,7 @@
   width: 100%;
 }
 
+/* Estilo unificado para os estados de Carregamento, Erro e Não Encontrado */
 .loading,
 .error,
 .not-found {
@@ -26,13 +29,16 @@
   text-align: center;
   padding: 40px;
   border-radius: 12px;
-  background-color: white;
+  background-color: var(--card-background-color);
   box-shadow: 0 4px 12px var(--shadow-color);
+  border: 1px solid var(--border-color);
   width: 100%;
   max-width: 500px;
+  color: var(--text-color);
 
   mat-spinner {
     margin-bottom: 24px;
+    --mdc-circular-progress-active-indicator-color: var(--primary-color);
   }
 
   mat-icon {
@@ -65,22 +71,39 @@
   max-width: 900px;
   box-shadow: 0 8px 24px var(--shadow-color);
   border-radius: 16px;
-  background-color: white;
+  background-color: var(--card-background-color);
+  border: 1px solid var(--border-color);
   overflow: hidden;
 }
 
 .post-card {
   width: 100%;
+  box-shadow: none !important;
+  border-radius: 12px;
+  border: 1px solid #ffd54f; /* Borda dourada */
+}
+
+.post-image-container {
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px 16px 0 0;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .post-image {
   width: 100%;
-  height: 450px;
-  // A correção está aqui: 'cover' preenche o contêiner
-  // sacrificando as bordas, mas mantendo a proporção.
+  height: 100%;
   object-fit: cover;
-  border-radius: 16px 16px 0 0;
-  border-bottom: 1px solid #eee;
+  transition: transform 0.3s ease;
+}
+
+/* Efeito de zoom suave ao passar o mouse */
+.post-image-container:hover .post-image {
+  transform: scale(1.05);
 }
 
 mat-card-header {
@@ -105,6 +128,7 @@ mat-card-content {
   padding: 0 32px;
   .post-content-text {
     line-height: 1.8;
+    font-size: 1.1rem;
     color: var(--text-color);
   }
   .post-date {
@@ -117,10 +141,13 @@ mat-card-content {
 
 mat-card-actions {
   padding: 24px 32px;
-  .mat-button {
-    font-weight: 700; // Botão em negrito, como você pediu
+
+  .back-button {
+    color: #bf360c;
+
+    font-weight: bold;
+
     text-transform: uppercase;
-    color: var(--primary-color);
   }
 }
 
